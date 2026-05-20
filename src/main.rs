@@ -11,7 +11,10 @@ fn main() {
     }
 
     let commands: Vec<String> = args.iter().skip(1).cloned().collect();
-    println!("Rage Runner starting {} commands concurrently...\n", commands.len());
+    println!(
+        "Rage Runner starting {} commands concurrently...\n",
+        commands.len()
+    );
 
     let mut handles = vec![];
 
@@ -38,7 +41,15 @@ fn main() {
     for handle in handles {
         let (cmd, output) = handle.join().unwrap();
 
-        println!("\n[{}] {}", cmd, if output.status.success() { "✅ Success" } else { "❌ Failed" });
+        println!(
+            "\n[{}] {}",
+            cmd,
+            if output.status.success() {
+                "✅ Success"
+            } else {
+                "❌ Failed"
+            }
+        );
 
         if !output.stdout.is_empty() {
             println!("Output:\n{}", String::from_utf8_lossy(&output.stdout));
@@ -47,7 +58,7 @@ fn main() {
             eprintln!("Errors:\n{}", String::from_utf8_lossy(&output.stderr));
         }
 
-        println!("─".repeat(50));
+        println!("{}", "─".repeat(50));
 
         if output.status.success() {
             successes += 1;
@@ -56,5 +67,8 @@ fn main() {
         }
     }
 
-    println!("\nFinished! ✅ {} succeeded | ❌ {} failed", successes, failures);
+    println!(
+        "\nFinished! ✅ {} succeeded | ❌ {} failed",
+        successes, failures
+    );
 }
