@@ -10,8 +10,8 @@ fn main() {
     println!("Running {} commands:", args.len() - 1);
     let commands = &args[1..];
 
-    for cmd in commands {
-        println!("\nExecuting: {}", cmd);
+    for (i, cmd) in commands.iter().enumerate() {
+        println!("\nExecuting command {}: {}", i + 1, cmd);
         let output = Command::new("sh")
             .arg("-c")
             .arg(cmd)
@@ -34,4 +34,5 @@ fn main() {
             );
         }
     }
+    println!("All commands finished!");
 }
