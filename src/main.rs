@@ -1,3 +1,3 @@
 fn main() {
-    println!("Hello, world!");
+    println!("Rage runner is ready to rage");
 }
