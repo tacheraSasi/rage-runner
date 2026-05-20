@@ -7,9 +7,9 @@ fn main() {
         std::process::exit(1);
     }
 
-    println!("Running {} commands:", args.len() - 1);
-    let commands = &args[1..];
-
+    let commands: Vec<String> = args.iter().skip(1).cloned().collect();
+    println!("Rage Runner starting {} commands concurrently...\n", commands.len());
+    
     for (i, cmd) in commands.iter().enumerate() {
         println!("\nExecuting command {}: {}", i + 1, cmd);
         let output = Command::new("sh")
