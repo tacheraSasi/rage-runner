@@ -6,21 +6,32 @@ fn main() {
         eprintln!("Usage: rage-runner <command1> [command2] ...");
         std::process::exit(1);
     }
-    let command = &args[1];
 
-    let output = Command::new("sh")
-        .arg("-c")
-        .arg(command)
-        .output()
-        .expect("Failed to execute command");
+    println!("Running {} commands:", args.len() - 1);
+    let commands = &args[1..];
 
-    println!("Output status: {}", output.status);
+    for cmd in commands {
+        println!("\nExecuting: {}", cmd);
+        let output = Command::new("sh")
+            .arg("-c")
+            .arg(cmd)
+            .output()
+            .expect("Failed to execute command");
 
-    if !output.stdout.is_empty() {
-        println!("Standard Output:\n{}", String::from_utf8_lossy(&output.stdout));
-    }
+        println!("Output status: {}", output.status);
 
-    if !output.stderr.is_empty() {
-        eprintln!("Standard Error:\n{}", String::from_utf8_lossy(&output.stderr));
+        if !output.stdout.is_empty() {
+            println!(
+                "Standard Output:\n{}",
+                String::from_utf8_lossy(&output.stdout)
+            );
+        }
+
+        if !output.stderr.is_empty() {
+            eprintln!(
+                "Standard Error:\n{}",
+                String::from_utf8_lossy(&output.stderr)
+            );
+        }
     }
 }
